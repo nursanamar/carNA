@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Strict//EN http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd>
+ <html lang="en">
+ <head>
+	 <title></title>
+	 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="../assets/css/bootstrap.css" type="text/css"/>
+	 <style>
+	 .cari {
+	 	width:50%;
+	 	margin-bottom:5%;
+	 	
+	 }
+	 body {
+	 	padding-top:20%;
+	 }
+	 </style>
+	 <script src="../assets/js/react.min.js"></script>
+	 <script src="../assets/js/react-dom.min.js"></script>
+	 <script src="../assets/js/browser.min.js"></script>
+ </head>
+	 <body>
+		<div  id="container"></div>
+		<script type="text/babel">
+		
+			class Cari extends React.Component {
+				render() {
+					return <input className='cari' type="text" placeholder='search....' />;
+				}
+			}		
+			class Row extends React.Component {
+				render() {
+					return (
+						<tr>
+							<td>{this.props.idd}</td>
+							<td>{this.props.nama}</td>
+							<td>{this.props.act}</td>
+						</tr>
+					);
+				}
+			}
+			class Crud extends React.Component {
+				render() {
+					return (
+						<div className='col-sm-4 col-sm-offset-2'>
+							<Cari />
+							<table className='table table-striped table-responsive'>
+							<thead>
+								<td>ID</td>
+								<td>Nama</td>
+								<td>aksi</td>
+							</thead>
+							<tbody>
+								<Row idd='ggg' nama='ghh' act='hhhh' />
+								</tbody>
+							</table>
+						</div>
+					);
+				}
+			}
+			ReactDOM.render(
+				<Crud />,
+				document.getElementById("container")
+			);
+		</script>
+	 </body>
+ </html>
