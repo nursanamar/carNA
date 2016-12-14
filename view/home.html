@@ -17,6 +17,7 @@
 	 </style>
 	 <script src="../assets/js/react.min.js"></script>
 	 <script src="../assets/js/react-dom.min.js"></script>
+	 <script src="../assets/js/ajax.js"></script>
 	 <script src="../assets/js/browser.min.js"></script>
  </head>
 	 <body>
@@ -32,8 +33,8 @@
 				render() {
 					return (
 						<tr>
-							<td>{this.props.idd}</td>
 							<td>{this.props.nama}</td>
+							<td>{this.props.kelas}</td>
 							<td>{this.props.act}</td>
 						</tr>
 					);
@@ -41,25 +42,31 @@
 			}
 			class Crud extends React.Component {
 				render() {
+					var baris	 = [];
+					this.props.data.forEach(function(data){
+						baris.push(<Row nama={data.nama} kelas={data.kelas} act='hapus' />);
+					});
 					return (
 						<div className='col-sm-4 col-sm-offset-2'>
+						<h1>Tabel CRUD</h1>
 							<Cari />
 							<table className='table table-striped table-responsive'>
 							<thead>
-								<td>ID</td>
 								<td>Nama</td>
+								<td>Kelas</td>
 								<td>aksi</td>
 							</thead>
 							<tbody>
-								<Row idd='ggg' nama='ghh' act='hhhh' />
+								{baris}
 								</tbody>
 							</table>
 						</div>
 					);
 				}
 			}
+			var data = [{"nama":"nsma","kelas":"ndat "},{"nama":"nursan","kelas":"XII TKJ 2"},{"nama":"ina","kelas":"XII TKJ "},{"nama":"rahmat","kelas":"XII TKJ 1"}];
 			ReactDOM.render(
-				<Crud />,
+				<Crud data={data} />,
 				document.getElementById("container")
 			);
 		</script>

@@ -8,8 +8,9 @@
 				$this->model("tabel"); 			//panggil model
 		}
 		public function index(){
-			$data['hasil'] = $this->model->ambil();
-			$this->view("view",$data);
+			$data = $this->model->ambil();
+			$json = json_encode($data);
+			echo $json;
 		}
 		public function tambah(){
 			$data = array( "nama" => "rahmat","kelas" => "XII TKJ 2");
