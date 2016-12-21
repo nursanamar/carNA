@@ -10,9 +10,9 @@ abstract class base{
 		$this->load = new load();
 	}
 	public function model($p){
-	
+
 		$this->model = $this->load->model($p);
-		
+
 	}
 	public function executeaction($action,$urlparams){
 		$this->urlparams = $urlparams;
@@ -20,7 +20,10 @@ abstract class base{
 		return $this->{$this->action}();
 	}
 	public function view($file,$data){
-		extract($data,EXTR_PREFIX_SAME,"w");
+		if (is_array($data)) {
+				extract($data,EXTR_PREFIX_SAME,"w");
+		}
+
 		$conten = __DIR__."/../../../view/".$file.".php";
 		require $conten;
 	}

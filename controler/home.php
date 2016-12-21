@@ -12,6 +12,10 @@
 			$json = json_encode($data);
 			echo $json;
 		}
+		public function table()
+		{
+			$this->view('home',null);
+		}
 		public function tambah(){
 			$data = array( "nama" => "rahmat","kelas" => "XII TKJ 2");
 			$this->model->tambah($data);

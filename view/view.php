@@ -6,17 +6,25 @@
 	 <link rel="stylesheet" href="" type="text/css"/>
  </head>
 	 <body>
-			<?php 
-				print_r($hasil);
-				echo "<hr>";
-				var_dump($hasil);
-				echo "<hr>";
-				//print_r($tabel);
-				foreach($hasil as $col => $value){
-					echo $value['nama']." = ".$value['kelas']."<br>";
-				}
-				echo "<hr>";
-				//print_r($model);
-			?>
+			<script type="text/javascript">
+      //function ambil(){
+      var xhr = new XMLHttpRequest();
+      var data=[];
+      xhr.onreadystatechange =function(){
+        if(this.readyState === 4 && this.status === 200){
+           data = JSON.parse(this.responseText);
+        }
+      };
+      xhr.open("GET","localhost/carNA",true);
+      xhr.send();
+      
+      //return data;
+      //}
+      //var data = [{"nama":"nsma","kelas":"ndat "},{"nama":"nursan","kelas":"XII TKJ 2"},{"nama":"ina","kelas":"XII TKJ "},{"nama":"rahmat","kelas":"XII TKJ 1"}];
+      console.log(data);
+			</script>
+      <ul id="ul">
+
+      </ul>
 	 </body>
  </html>

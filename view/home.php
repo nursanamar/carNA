@@ -4,31 +4,38 @@
 	 <title></title>
 	 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	 <meta name="viewport" content="width=device-width, initial-scale=1">
-	 <link rel="stylesheet" href="../assets/css/bootstrap.css" type="text/css"/>
+	 <link rel="stylesheet" href="../carNA/assets/css/bootstrap.css" type="text/css"/>
 	 <style>
 	 .cari {
 	 	width:50%;
 	 	margin-bottom:5%;
-	 	
+
 	 }
-	 body {
-	 	padding-top:20%;
-	 }
+
 	 </style>
-	 <script src="../assets/js/react.min.js"></script>
-	 <script src="../assets/js/react-dom.min.js"></script>
-	 <script src="../assets/js/ajax.js"></script>
-	 <script src="../assets/js/browser.min.js"></script>
+	 <script src="../carNA/assets/js/react.min.js"></script>
+	 <script src="../carNA/assets/js/react-dom.min.js"></script>
+	 <!--<script src="../assets/js/ajax.js"></script>-->
+   <script src="../carNA/assets/js/jquery.min.js">
+   </script>
+	 <script src="../carNA/assets/js/browser.min.js"></script>
  </head>
 	 <body>
 		<div  id="container"></div>
 		<script type="text/babel">
-		
+
 			class Cari extends React.Component {
+        constructor(props) {
+          super(props);
+          this.ubah = this.ubah.bind(this);
+        }
+        ubah(e) {
+          this.props.event(e.target.value);
+        }
 				render() {
-					return <input className='cari' type="text" placeholder='search....' />;
+					return <input className='cari' type="text" placeholder='search....' value={this.props.value} onChange={this.ubah} />;
 				}
-			}		
+			}
 			class Row extends React.Component {
 				render() {
 					return (
@@ -41,15 +48,39 @@
 				}
 			}
 			class Crud extends React.Component {
+        constructor(props) {
+          super(props);
+          this.ubah = this.ubah.bind(this);
+          this.state = {
+            filter:"",
+            data:[]
+          };
+        }
+        ubah(filter) {
+          this.setState({
+            filter:filter
+          });
+        }
+        componentDidMount() {
+          $.get("http://localhost/carNA",function(res) {
+            this.setState({
+              data: JSON.parse(res)
+            });
+          }.bind(this));
+
+        }
 				render() {
 					var baris	 = [];
-					this.props.data.forEach(function(data){
+					this.state.data.forEach(data => {
+            if(data.nama.indexOf(this.state.filter) === -1 ){
+              return;
+            }
 						baris.push(<Row nama={data.nama} kelas={data.kelas} act='hapus' />);
 					});
 					return (
-						<div className='col-sm-4 col-sm-offset-2'>
+						<div className='col-sm-4 col-sm-offset-4'>
 						<h1>Tabel CRUD</h1>
-							<Cari />
+							<Cari event={this.ubah} value={this.state.filter} />
 							<table className='table table-striped table-responsive'>
 							<thead>
 								<td>Nama</td>
