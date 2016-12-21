@@ -11,6 +11,9 @@
 	 	margin-bottom:5%;
 
 	 }
+   .tambah {
+     margin : 2%;
+   }
 
 	 </style>
 	 <script src="../carNA/assets/js/react.min.js"></script>
@@ -47,6 +50,17 @@
 					);
 				}
 			}
+      class Tambah extends React.Component {
+        render() {
+          return (
+            <form>
+              <input className="form-control tambah" type="text" placeholder="nama" />
+              <input className="form-control tambah" type="text" placeholder="kelas" />
+              <input className="btn btn-primary tambah" type="submit" value="tambah" />
+            </form>
+          );
+        }
+      }
 			class Crud extends React.Component {
         constructor(props) {
           super(props);
@@ -91,13 +105,14 @@
 								{baris}
 								</tbody>
 							</table>
+              <Tambah />
 						</div>
 					);
 				}
 			}
 			var data = [{"nama":"nsma","kelas":"ndat "},{"nama":"nursan","kelas":"XII TKJ 2"},{"nama":"ina","kelas":"XII TKJ "},{"nama":"rahmat","kelas":"XII TKJ 1"}];
 			ReactDOM.render(
-				<Crud data={data} />,
+				<Crud />,
 				document.getElementById("container")
 			);
 		</script>
