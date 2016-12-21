@@ -51,12 +51,35 @@
 				}
 			}
       class Tambah extends React.Component {
+      	constructor(props) {
+      		super(props);
+      		this.state = {
+      			kelas:"",
+      			nama:""
+      		};
+      		this.nama = this.nama.bind(this);
+      		this.kelas = this.kelas.bind(this);
+      		this.suhmit = this.submit.bind(this);
+      	}
+      	nama(e) {
+      		this.setState({
+      			nama: e.target.value
+      		});
+      	}
+      	kelas(e) {
+      		this.setState({
+      			kelas: e.target.value
+      		});
+      	}
+      	submit() {
+      		this.props.event(this.state.nama,this.state.kelas);
+      	}
         render() {
           return (
             <form>
-              <input className="form-control tambah" type="text" placeholder="nama" />
-              <input className="form-control tambah" type="text" placeholder="kelas" />
-              <input className="btn btn-primary tambah" type="submit" value="tambah" />
+              <input className="form-control tambah" type="text" placeholder="nama" value={this.state.nama} onChange={this.nama} />
+              <input className="form-control tambah" type="text" placeholder="kelas" value={this.state.kelas} onChange={this.kelas} />
+              <input className="btn btn-primary tambah" type="submit" value="tambah" onClick={this.submit} />
             </form>
           );
         }
@@ -65,10 +88,19 @@
         constructor(props) {
           super(props);
           this.ubah = this.ubah.bind(this);
+          this.tambah = this.tambah.bind(this);
           this.state = {
             filter:"",
-            data:[]
+            data:[],
+            status:"",
           };
+        }
+        tambah(nama,kelas) {
+        	$.post("http://localhost:8080/carNa/index.php?/home/tambah",{"nama":nama,"kelas":kelas},function(res){
+        	this.setState({
+        		status: res
+        	});
+        	}.bind(this));
         }
         ubah(filter) {
           this.setState({
@@ -76,7 +108,7 @@
           });
         }
         componentDidMount() {
-          $.get("http://localhost/carNA",function(res) {
+          $.get("http://localhost:8080/carNA",function(res) {
             this.setState({
               data: JSON.parse(res)
             });
@@ -105,7 +137,7 @@
 								{baris}
 								</tbody>
 							</table>
-              <Tambah />
+              <Tambah event={this.tambah} />
 						</div>
 					);
 				}
