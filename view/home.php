@@ -89,18 +89,37 @@
           super(props);
           this.ubah = this.ubah.bind(this);
           this.tambah = this.tambah.bind(this);
+          this.inputKelas = this.inputKelas.bind(this);
+          this.inputNama = this.inputNama.bind(this);
           this.state = {
             filter:"",
             data:[],
             status:"",
+            kelas:"",
+            nama:""
           };
         }
-        tambah(nama,kelas) {
-        	$.post("http://localhost:8080/carNa/index.php?/home/tambah",{"nama":nama,"kelas":kelas},function(res){
+        inputKelas(e) {
+        	this.setState({
+        		kelas:e.target.value
+        	});
+        }
+        inputNama(e) {
+        	this.setState({
+        		nama:e.target.value
+        	});
+        }
+        tambah() {
+        	$.post("http://localhost:8080/carNa/index.php?/home/tambah",{"nama":this.state.nama,"kelas":this.state.kelas},function(res){
         	this.setState({
         		status: res
         	});
         	}.bind(this));
+        	this.componentDidMount();
+        	this.setState({
+        		nama:"",
+        		kelas:""
+        	});
         }
         ubah(filter) {
           this.setState({
@@ -137,7 +156,11 @@
 								{baris}
 								</tbody>
 							</table>
-              <Tambah event={this.tambah} />
+              				<div>
+              				 <input className="form-control tambah" type="text" placeholder="nama" value={this.state.nama} onChange={this.inputNama} />
+              <input className="form-control tambah" type="text" placeholder="kelas" value={this.state.kelas} onChange={this.inputKelas} />
+              <a className='btn btn-primary' onClick={this.tambah} > tambah </a>
+              				</div>
 						</div>
 					);
 				}

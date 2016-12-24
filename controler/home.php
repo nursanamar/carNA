@@ -12,14 +12,18 @@
 			$json = json_encode($data);
 			echo $json;
 		}
+		public function pos() {
+			$this->view('form',null);
+		}
 		public function table()
 		{
 			$this->view('home',null);
 		}
 		public function tambah(){
-			$data = array( "nama" => "rahmat","kelas" => "XII TKJ 2");
+			$data = array( "nama" => $_POST['nama'],"kelas" => $_POST['kelas']);
 			$this->model->tambah($data);
-			$this->index();
+			$res = json_encode($_POST);
+			echo $res;
 		}
 		public function ubah(){
 			$data = array("kelas" => "XII TKJ 1");
