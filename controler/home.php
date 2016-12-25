@@ -30,8 +30,9 @@
 			$this->model->ubah($data);
 		}
 		public function hapus(){
-			$this->model->hapus("nama","rahmat");
-			redirect(index);
+			$this->model->hapus("nama",$_POST['nama']);
+			$response = array("status" => "sukses");
+			echo json_encode($response);
 		}
 	}
  ?>

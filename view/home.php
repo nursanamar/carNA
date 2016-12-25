@@ -89,6 +89,7 @@
           super(props);
           this.ubah = this.ubah.bind(this);
           this.tambah = this.tambah.bind(this);
+          this.hapus = this.hapus.bind(this);
           this.inputKelas = this.inputKelas.bind(this);
           this.inputNama = this.inputNama.bind(this);
           this.state = {
@@ -121,6 +122,15 @@
         		kelas:""
         	});
         }
+        hapus() {
+        	$.post("http://localhost:8080/carNA/index.php?/home/hapus",{'nama':'form'},function(res){
+        		this.setState({
+        			status:res
+        		});
+        		this.componentDidMount();
+        	}.bind(this));
+        	
+        }
         ubah(filter) {
           this.setState({
             filter:filter
@@ -146,6 +156,7 @@
 						<div className='col-sm-4 col-sm-offset-4'>
 						<h1>Tabel CRUD</h1>
 							<Cari event={this.ubah} value={this.state.filter} />
+							<a className="btn btn-primary" onClick={this.hapus} >hapus</a>
 							<table className='table table-striped table-responsive'>
 							<thead>
 								<td>Nama</td>
