@@ -53,7 +53,7 @@
 						<tr>
 							<td>{this.props.nama}</td>
 							<td>{this.props.kelas}</td>
-							<td><a className="btn btn-primary" onClick={this.hapus} >hapus</a></td>
+							<td><a className="btn btn-danger" onClick={this.hapus} >hapus</a></td>
 						</tr>
 					);
 				}
