@@ -40,12 +40,20 @@
 				}
 			}
 			class Row extends React.Component {
+				constructor(props) {
+					super(props);
+					this.hapus = this.hapus.bind(this);
+				}
+				hapus(e) {
+					this.props.act(this.props.nama);
+					e.preventDefault;
+				}
 				render() {
 					return (
 						<tr>
 							<td>{this.props.nama}</td>
 							<td>{this.props.kelas}</td>
-							<td>{this.props.act}</td>
+							<td><a className="btn btn-primary" onClick={this.hapus} >hapus</a></td>
 						</tr>
 					);
 				}
@@ -122,8 +130,8 @@
         		kelas:""
         	});
         }
-        hapus() {
-        	$.post("http://localhost:8080/carNA/index.php?/home/hapus",{'nama':'form'},function(res){
+        hapus(nama) {
+        	$.post("http://localhost:8080/carNA/index.php?/home/hapus",{'nama':nama},function(res){
         		this.setState({
         			status:res
         		});
@@ -150,13 +158,12 @@
             if(data.nama.indexOf(this.state.filter) === -1 ){
               return;
             }
-						baris.push(<Row nama={data.nama} kelas={data.kelas} act='hapus' />);
+						baris.push(<Row nama={data.nama} kelas={data.kelas} act={this.hapus} />);
 					});
 					return (
 						<div className='col-sm-4 col-sm-offset-4'>
 						<h1>Tabel CRUD</h1>
 							<Cari event={this.ubah} value={this.state.filter} />
-							<a className="btn btn-primary" onClick={this.hapus} >hapus</a>
 							<table className='table table-striped table-responsive'>
 							<thead>
 								<td>Nama</td>
