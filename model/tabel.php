@@ -25,11 +25,11 @@
 
 			$this->delete();
 		}
-		public function ubah($p){
+		public function ubah($p,$p2){
 
 			$this->into("data");
 			$this->set($p);
-			$this->where("nama","rahmat");
+			$this->where("nama",$p2);
 
 			$this->update();
 
