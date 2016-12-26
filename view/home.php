@@ -67,6 +67,7 @@
         constructor(props) {
           super(props);
           this.ubah = this.ubah.bind(this);
+          this.tombolcancel = this.tombolcancel.bind(this);
           this.tomboledit = this.tomboledit.bind(this);
           this.cekmode = this.cekmode.bind(this);
         this.tambah = this.tambah.bind(this);
@@ -98,7 +99,17 @@
         		nama:nama,
         		kelas:kelas,
         		where:nama,
-        		mode:'edit'
+        		mode:'edit',
+        		cancel:<a className='btn btn-danger' onClick={this.tombolcancel}>batal</a>
+        	});
+        }
+        tombolcancel() {
+        	this.setState({
+        		nama:'',
+        		kelas:'',
+        		where:'',
+        		mode:'tambah',
+        		cancel:''
         	});
         }
         cekmode() {
@@ -116,7 +127,8 @@
         		nama:'',
         		kelas:'',
         		where:'',
-        		mode:'tambah'
+        		mode:'tambah',
+        		cancel:''
         	});
         }
         tambah() {
@@ -178,7 +190,7 @@
               				<div>
               				 <input className="form-control tambah" type="text" placeholder="nama" value={this.state.nama} onChange={this.inputNama} />
               <input className="form-control tambah" type="text" placeholder="kelas" value={this.state.kelas} onChange={this.inputKelas} />
-              <a className='btn btn-primary' onClick={this.cekmode} > {this.state.mode} </a>
+              <a className='btn btn-primary' onClick={this.cekmode} > {this.state.mode} </a> {this.state.cancel}
               				</div>
 						</div>
 					);
