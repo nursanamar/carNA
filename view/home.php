@@ -43,60 +43,33 @@
 				constructor(props) {
 					super(props);
 					this.hapus = this.hapus.bind(this);
+					this.edit = this.edit.bind(this);
 				}
 				hapus(e) {
 					this.props.act(this.props.nama);
-					e.preventDefault;
+					e.preventDefault();
+				}
+				edit(e) {
+					this.props.acte(this.props.nama,this.props.kelas);
+					e.preventDefault();
 				}
 				render() {
 					return (
 						<tr>
 							<td>{this.props.nama}</td>
 							<td>{this.props.kelas}</td>
-							<td><a className="btn btn-danger" onClick={this.hapus} >hapus</a></td>
+							<td><a className="btn btn-danger btn-xs" onClick={this.hapus} >hapus</a> <a className="btn btn-default btn-xs" onClick={this.edit} > edit</a> </td>
 						</tr>
 					);
 				}
 			}
-      class Tambah extends React.Component {
-      	constructor(props) {
-      		super(props);
-      		this.state = {
-      			kelas:"",
-      			nama:""
-      		};
-      		this.nama = this.nama.bind(this);
-      		this.kelas = this.kelas.bind(this);
-      		this.suhmit = this.submit.bind(this);
-      	}
-      	nama(e) {
-      		this.setState({
-      			nama: e.target.value
-      		});
-      	}
-      	kelas(e) {
-      		this.setState({
-      			kelas: e.target.value
-      		});
-      	}
-      	submit() {
-      		this.props.event(this.state.nama,this.state.kelas);
-      	}
-        render() {
-          return (
-            <form>
-              <input className="form-control tambah" type="text" placeholder="nama" value={this.state.nama} onChange={this.nama} />
-              <input className="form-control tambah" type="text" placeholder="kelas" value={this.state.kelas} onChange={this.kelas} />
-              <input className="btn btn-primary tambah" type="submit" value="tambah" onClick={this.submit} />
-            </form>
-          );
-        }
-      }
 			class Crud extends React.Component {
         constructor(props) {
           super(props);
           this.ubah = this.ubah.bind(this);
-          this.tambah = this.tambah.bind(this);
+          this.tomboledit = this.tomboledit.bind(this);
+          this.cekmode = this.cekmode.bind(this);
+        this.tambah = this.tambah.bind(this);
           this.hapus = this.hapus.bind(this);
           this.inputKelas = this.inputKelas.bind(this);
           this.inputNama = this.inputNama.bind(this);
@@ -105,7 +78,9 @@
             data:[],
             status:"",
             kelas:"",
-            nama:""
+            nama:"",
+            mode:'tambah',
+            where:''
           };
         }
         inputKelas(e) {
@@ -116,6 +91,32 @@
         inputNama(e) {
         	this.setState({
         		nama:e.target.value
+        	});
+        }
+        tomboledit(nama,kelas) {
+        	this.setState({
+        		nama:nama,
+        		kelas:kelas,
+        		where:nama,
+        		mode:'edit'
+        	});
+        }
+        cekmode() {
+        	if(this.state.mode === 'tambah'){
+        		this.tambah();
+        	}else{
+        		this.update();
+        	}
+        }
+        update() {
+        	$.post("http://localhost:8080/carNA/index.php?/home/ubah",{"nama":this.state.nama,"kelas":this.state.kelas,"where":this.state.where},function(){
+        		this.componentDidMount();
+        	}.bind(this));
+        	this.setState({
+        		nama:'',
+        		kelas:'',
+        		where:'',
+        		mode:'tambah'
         	});
         }
         tambah() {
@@ -158,7 +159,7 @@
             if(data.nama.indexOf(this.state.filter) === -1 ){
               return;
             }
-						baris.push(<Row nama={data.nama} kelas={data.kelas} act={this.hapus} />);
+						baris.push(<Row nama={data.nama} kelas={data.kelas} act={this.hapus} acte={this.tomboledit} />);
 					});
 					return (
 						<div className='col-sm-4 col-sm-offset-4'>
@@ -177,7 +178,7 @@
               				<div>
               				 <input className="form-control tambah" type="text" placeholder="nama" value={this.state.nama} onChange={this.inputNama} />
               <input className="form-control tambah" type="text" placeholder="kelas" value={this.state.kelas} onChange={this.inputKelas} />
-              <a className='btn btn-primary' onClick={this.tambah} > tambah </a>
+              <a className='btn btn-primary' onClick={this.cekmode} > {this.state.mode} </a>
               				</div>
 						</div>
 					);
