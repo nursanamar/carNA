@@ -120,7 +120,7 @@
         	}
         }
         update() {
-        	$.post("http://localhost:8080/carNA/index.php?/home/ubah",{"nama":this.state.nama,"kelas":this.state.kelas,"where":this.state.where},function(){
+        	$.post("http://mirip.esy.es/carNA/index.php?/home/ubah",{"nama":this.state.nama,"kelas":this.state.kelas,"where":this.state.where},function(){
         		this.componentDidMount();
         	}.bind(this));
         	this.setState({
@@ -132,7 +132,7 @@
         	});
         }
         tambah() {
-        	$.post("http://localhost:8080/carNa/index.php?/home/tambah",{"nama":this.state.nama,"kelas":this.state.kelas},function(res){
+        	$.post("http://mirip.esy.es/carNa/index.php?/home/tambah",{"nama":this.state.nama,"kelas":this.state.kelas},function(res){
         	this.setState({
         		status: res
         	});
@@ -144,7 +144,7 @@
         	});
         }
         hapus(nama) {
-        	$.post("http://localhost:8080/carNA/index.php?/home/hapus",{'nama':nama},function(res){
+        	$.post("http://mirip.esy.es/carNA/index.php?/home/hapus",{'nama':nama},function(res){
         		this.setState({
         			status:res
         		});
@@ -158,7 +158,7 @@
           });
         }
         componentDidMount() {
-          $.get("http://localhost:8080/carNA",function(res) {
+          $.get("http://mirip.esy.es/carNA",function(res) {
             this.setState({
               data: JSON.parse(res)
             });
